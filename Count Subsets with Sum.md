@@ -53,11 +53,11 @@ arr[] = [35, 2, 8, 22], target = 0Output: 1
 - **Expected Time Complexity:** O(n*target)
 - **Expected Auxiliary Space Complexity:** O(n*target)
 
-### Accepted Solutions (2)
+### Accepted Solutions (4)
 
 #### Solution 1 (Python)
 
-- **Submitted:** 2026-10-07 19:34:16
+- **Submitted:** 2026-10-07 19:37:12
 - **Status:** Correct
 - **Marks:** 0
 
@@ -92,6 +92,76 @@ class Solution:
 
 #### Solution 2 (Python)
 
+- **Submitted:** 2026-10-07 19:35:02
+- **Status:** Correct
+- **Marks:** 0
+
+```python
+class Solution:
+    def perfectSum(self, arr, target):
+        n = len(arr)
+        # Memoization dictionary TLE se bachne ke liye
+        memo = {}
+
+        def backtrack(index, current_sum):
+            if index == n:
+                return 1 if current_sum == target else 0
+
+            state = (index, current_sum)
+            if state in memo:
+                return memo[state]
+
+            # 1. Element ko include karna
+            pick = 0
+            if current_sum + arr[index] <= target:
+                pick = backtrack(index + 1, current_sum + arr[index])
+
+            # 2. Element ko exclude karna
+            not_pick = backtrack(index + 1, current_sum)
+
+            memo[state] = pick + not_pick
+            return memo[state]
+
+        return backtrack(0, 0)
+```
+
+#### Solution 3 (Python)
+
+- **Submitted:** 2026-10-07 19:34:16
+- **Status:** Correct
+- **Marks:** 0
+
+```python
+class Solution:
+    def perfectSum(self, arr, target):
+        n = len(arr)
+        # Memoization dictionary TLE se bachne ke liye
+        memo = {}
+
+        def backtrack(index, current_sum):
+            if index == n:
+                return 1 if current_sum == target else 0
+
+            state = (index, current_sum)
+            if state in memo:
+                return memo[state]
+
+            # 1. Element ko include karna
+            pick = 0
+            if current_sum + arr[index] <= target:
+                pick = backtrack(index + 1, current_sum + arr[index])
+
+            # 2. Element ko exclude karna
+            not_pick = backtrack(index + 1, current_sum)
+
+            memo[state] = pick + not_pick
+            return memo[state]
+
+        return backtrack(0, 0)
+```
+
+#### Solution 4 (Python)
+
 - **Submitted:** 2026-10-07 19:31:48
 - **Status:** Correct
 - **Marks:** 4
@@ -125,4 +195,4 @@ class Solution:
         return backtrack(0, 0)
 ```
 
-*Generated on: 10/7/2026, 7:34:33 PM*
+*Generated on: 10/7/2026, 7:38:44 PM*
